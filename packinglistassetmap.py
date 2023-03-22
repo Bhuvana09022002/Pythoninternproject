@@ -66,14 +66,14 @@ def Assetmap(folderpath,uuidcommon):
             ET.SubElement(Chunk,"Path").text =str(filename)
             
             
-             
+    #to save it in an xml format        
     treeform =ET.ElementTree(doc)
     treeform.write(os.path.join(folderpath,"assetmap.xml"),encoding="utf-8",xml_declaration=True,short_empty_elements=False)
     
 
 
 if __name__ == '__main__':
-    
+    # enter you DCP folder path
     folderpath=input("enter your folder path:")
     path=os.path.dirname(folderpath)
     
@@ -90,10 +90,11 @@ if __name__ == '__main__':
 
         Packinglist(folderpath,uuidcommon)
         Assetmap(folderpath,uuidcommon)
-
-
-
-        
+    #  if the povided path is not valid then it will show an error  
     if not os.path.exists(folderpath):
         print("That the directory doesnot exists")
         print("please provide a valid directory")
+
+
+        
+     
