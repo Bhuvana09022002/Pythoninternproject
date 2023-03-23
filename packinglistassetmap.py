@@ -13,6 +13,7 @@ def hashvalue(filename):
         return(base64.b64encode(hashlib.sha1(file.read()).digest())).decode('utf-8')
 # To create a packinglist
 def Packinglist(folderpath,uuidcommon):
+    
     doc =ET.Element("PackingList",xmlns="http://www.smpte-ra.org/schemas/429-8/2007/PKL")
     #uuid
     ET.SubElement(doc,"Id").text ="urn:uuid:"+str(uuidcommon['Uuid'])
@@ -76,20 +77,22 @@ if __name__ == '__main__':
     # enter you DCP folder path
     folderpath=input("enter your folder path:")
     path=os.path.dirname(folderpath)
-    
 
     # checking if the directory demo_folder
     # exist or not.
     if os.path.exists(folderpath):
     # to create a uuid for each file in a folder
-        uuidcommon = {}
-        uuidcommon["Uuid"]=uuid.uuid4()
-        for root, dirs, files in os.walk(folderpath):
-            for filename in files:
-                uuidcommon[filename] =uuid.uuid4()
+        if len(os.listdir(path)) == 0:
+            print("Directory is empty")
+        else:    
+            uuidcommon = {}
+            uuidcommon["Uuid"]=uuid.uuid4()
+            for root, dirs, files in os.walk(folderpath):
+                for filename in files:
+                    uuidcommon[filename] =uuid.uuid4()
 
-        Packinglist(folderpath,uuidcommon)
-        Assetmap(folderpath,uuidcommon)
+            Packinglist(folderpath,uuidcommon)
+            Assetmap(folderpath,uuidcommon)
     #  if the povided path is not valid then it will show an error  
     if not os.path.exists(folderpath):
         print("That the directory doesnot exists")
